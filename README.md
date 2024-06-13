@@ -4,6 +4,17 @@ Send a notice of new book release (Kobo)
 
 ## 使い方
 
+### 準備
+
+どこかにフォルダを作成し、コードをクローンまたはコピー。
+cache サブフォルダを作成。
+
+```
+mkdir cache
+```
+
+### 実行
+
 Windowsのコマンドプロンプトで
 
 ```
