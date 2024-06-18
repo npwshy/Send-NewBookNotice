@@ -19,8 +19,13 @@ class OutlookApp {
             $item.Cc = $cc
         }
         $item.Subject = $subject
-        $item.BodyFormat = 1 # 1 = HTML
-        $item.HTMLBody = $msg
+        if ($msg -match '<html') {
+            $item.BodyFormat = 2 # HTML
+            $item.HTMLBody = $msg
+        } else {
+            $item.BodyFormat = 1 # Text
+            $item.Body = $msg
+        }
         $this.LastSendItem = @{To=$to; Subject=$subject; SentOn=[DateTime]::Now}
         $item.Send()
     }

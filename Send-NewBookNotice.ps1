@@ -7,7 +7,8 @@ using module .\NotifyMail.psm1
 Param(
 [Parameter()][string]$BookList,
 [Parameter()][string]$AppId,
-[string]$MailTo
+[string]$MailTo,
+[string]$Encoding = "oem"
 )
 
 Set-StrictMode -Version latest
@@ -27,7 +28,7 @@ class BookListHeader {
 #
 # CSV から詮索リストをロード
 #
-$csvdata = Import-Csv $script:BookList -Encoding OEM | ForEach-Object { @{
+$csvdata = Import-Csv $script:BookList -Encoding $script:Encoding | ForEach-Object { @{
         Title = $_.[BookListHeader]::Title;
         Genre = $_.[BookListHeader]::Genre;
         Keyword = $_.[BookListHeader]::Keyword;
@@ -95,7 +96,7 @@ if ($newbooklist) {
             [BookListHeader]::SalesDate = $_.SalesDate;
         }
     } |Select-Object ([BookListHeader]::Title),([BookListHeader]::Genre),([BookListHeader]::Keyword),([BookListHeader]::SalesDate) |
-        Export-Csv -Path $BookList -Encoding oem
+        Export-Csv -Path $BookList -Encoding $script:Encoding
 }
 
 exit
